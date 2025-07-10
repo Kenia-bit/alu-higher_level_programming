@@ -6,10 +6,5 @@ class MyList(list):
     """A subclass of list with a method to print the list in ascending order."""
 
     def print_sorted(self):
-        """
-        Prints the list in ascending order and returns a new sorted list.
-        Does not modify the original list.
-        """
-        sorted_list = sorted(self)
-        print(sorted_list)
-        return sorted_list
+        """Prints the list in ascending order without modifying the original list."""
+        print(sorted(self))
