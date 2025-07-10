@@ -1,25 +1,54 @@
 #!/usr/bin/python3
-"""a class that is a subclass and initialises an object"""
+"""Module that defines Rectangle and Square classes"""
 
 
-Rectangle = __import__('9-rectangle').Rectangle
+class Rectangle:
+    """Rectangle class with width and height validation"""
+
+    def __init__(self, width, height):
+        self.integer_validator("width", width)
+        self.integer_validator("height", height)
+        self.__width = width
+        self.__height = height
+
+    def integer_validator(self, name, value):
+        """Validates that value is a positive integer > 0"""
+        if type(value) != int:
+            raise TypeError(f"{name} must be an integer")
+        if value <= 0:
+            raise ValueError(f"{name} must be > 0")
+
+    @property
+    def width(self):
+        """Width getter"""
+        return self.__width
+
+    @property
+    def height(self):
+        """Height getter"""
+        return self.__height
+
+    def area(self):
+        """Returns the area of the rectangle"""
+        return self.__width * self.__height
+
+    def __str__(self):
+        return "[Rectangle] {}/{}".format(self.__width, self.__height)
 
 
 class Square(Rectangle):
-    """a class Rectangle that inherits from BaseGeometry (7-base_geometry.py)
-    Instantiation with width and height: def __init__(self, size)
-    size  must be private. No getter or setter
-    size  must be positive integers, validated by integer_validator
-    """
+    """Square class inherits from Rectangle"""
+
     def __init__(self, size):
-        """instantiates an object"""
+        """Initialize square, validate size"""
         self.integer_validator("size", size)
-        self.__size = size
         super().__init__(size, size)
+        self.__size = size  # private attribute
 
     def area(self):
-        """evaluates the area of the square object"""
+        """Returns the area of the square"""
         return self.__size ** 2
 
     def __str__(self):
-        return f"[Square] {self.__size}/{self.__size}"
+        """Return square description"""
+        return "[Square] {}/{}".format(self.width, self.height)
