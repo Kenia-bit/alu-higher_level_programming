@@ -1,16 +1,13 @@
 #!/usr/bin/python3
-"""Defines BaseGeometry, Rectangle, and Square classes."""
+"""Defines a Square class that inherits from Rectangle and BaseGeometry."""
 
 
 class BaseGeometry:
-    """A base class for geometry."""
-
+    """Base class with integer validation."""
     def area(self):
-        """Raises an Exception."""
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
-        """Validates value is a positive integer."""
         if type(value) != int:
             raise TypeError(f"{name} must be an integer")
         if value <= 0:
@@ -18,37 +15,32 @@ class BaseGeometry:
 
 
 class Rectangle(BaseGeometry):
-    """Defines a rectangle."""
+    """Rectangle class that inherits from BaseGeometry."""
 
     def __init__(self, width, height):
         self.integer_validator("width", width)
-        self.integer_validator("height", height)
         self.__width = width
+
+        self.integer_validator("height", height)
         self.__height = height
 
     def area(self):
-        """Returns the area."""
         return self.__width * self.__height
 
     def __str__(self):
-        return "[Rectangle] {}/{}".format(self.__width, self.__height)
+        return f"[Rectangle] {self.__width}/{self.__height}"
 
 
 class Square(Rectangle):
-    """Defines a square, inheriting from Rectangle."""
+    """Square class that inherits from Rectangle."""
 
     def __init__(self, size):
         self.integer_validator("size", size)
+        self.__size = size  # Private size
         super().__init__(size, size)
-        self.__size = size  # private, no getter or setter
 
     def area(self):
-        """Returns the area of the square."""
         return self.__size ** 2
 
-
-# Test case (like 10-main.py)
-if __name__ == "__main__":
-    s = Square(13)
-    print(s)
-    print(s.area())
+    def __str__(self):
+        return f"[Square] {self.__size}/{self.__size}"
