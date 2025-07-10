@@ -55,7 +55,9 @@ class Rectangle:
         """Returns the string representation using print_symbol."""
         if self.width == 0 or self.height == 0:
             return ""
-        return "\n".join([str(self.print_symbol) * self.width for _ in range(self.height)])
+        return "\n".join(
+            [str(self.print_symbol) * self.width for _ in range(self.height)]
+        )
 
     def __repr__(self):
         """Returns a string that recreates the rectangle with eval()."""
@@ -68,12 +70,14 @@ class Rectangle:
 
     @staticmethod
     def bigger_or_equal(rect_1, rect_2):
-        """Returns the rectangle with the greater area (or rect_1 if equal)."""
+        """Returns the bigger rectangle or rect_1 if equal area."""
         if not isinstance(rect_1, Rectangle):
-            raise TypeError("rect_1 must be an instance of Rectangle"
+            raise TypeError(
+                "rect_1 must be an instance of Rectangle"
             )
         if not isinstance(rect_2, Rectangle):
-            raise TypeError("rect_2 must be an instance of Rectangle"
+            raise TypeError(
+                "rect_2 must be an instance of Rectangle"
             )
 
         if rect_1.area() >= rect_2.area():
