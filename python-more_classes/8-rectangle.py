@@ -1,23 +1,11 @@
 #!/usr/bin/python3
-"""a class Rectangle that defines a rectangle by: (based on 0-rectangle.py)"""
+"""A class Rectangle that defines a rectangle."""
 
 
 class Rectangle:
-    """ a class that defines the a rectangle
-        properties: getter and setter methods for width and height
-        methods: __init__ method -for creating a class
-                area method - for calculating the area of the rectangle
-                perimeter method -for calculating the perimeter of rectangle
-                __str__ methods - that returns the string representation of
-                Rectangle instance(s)
-                _repr__ method - returns the formal strig representation of
-                an object that can be evaluated
-                _del_ method - performs clean up operation before an object
-                is deleted
-    """
+    """Defines a rectangle with width and height."""
 
     number_of_instances = 0
-
     print_symbol = "#"
 
     def __init__(self, width=0, height=0):
@@ -70,8 +58,13 @@ class Rectangle:
     def perimeter(self):
         if self.width == 0 or self.height == 0:
             return 0
-        result = (self.width * 2) + (self.height * 2)
-        return result
+        return 2 * (self.width + self.height)
+
+    def __eq__(self, other):
+        """Compares two rectangles based on their area."""
+        if isinstance(other, Rectangle):
+            return self.area() == other.area()
+        return False
 
     @staticmethod
     def bigger_or_equal(rect_1, rect_2):
@@ -79,11 +72,8 @@ class Rectangle:
             raise TypeError("rect_1 must be an instance of Rectangle")
         if not isinstance(rect_2, Rectangle):
             raise TypeError("rect_2 must be an instance of Rectangle")
-        if rect_1 == rect_2:
+
+        if rect_1.area() >= rect_2.area():
             return rect_1
-        area1 = rect_1.area()
-        area2 = rect_2.area()
-        if area1 > area2:
-            return area1
         else:
-            return area2
+            return rect_2
