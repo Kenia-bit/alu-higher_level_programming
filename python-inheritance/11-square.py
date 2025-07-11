@@ -1,25 +1,24 @@
 #!/usr/bin/python3
-"""Module that defines the Square class."""
+"""Inherits BaseGeometry class"""
 
 
-class Square:
-    """Square class that validates size and calculates area."""
+BaseGeometry = __import__('7-base_geometry').BaseGeometry
+Rectangle = __import__('9-rectangle').Rectangle
+
+
+class Square(Rectangle):
+    """Inherits from Rectangle."""
 
     def __init__(self, size):
+        """set the values"""
         self.integer_validator("size", size)
+        super().__init__(size, size)
         self.__size = size
 
-    def integer_validator(self, name, value):
-        """Validate that value is an int and > 0."""
-        if type(value) != int:
-            raise TypeError(f"{name} must be an integer")
-        if value <= 0:
-            raise ValueError(f"{name} must be greater than 0")
-
     def area(self):
-        """Return area of the square."""
+        """Area of Square"""
         return self.__size ** 2
 
     def __str__(self):
-        """Return string representation: [Square] size/size"""
-        return "[Square] {}/{}".format(self.__size, self.__size)
+        '''Returns [Square] '''
+        return str("[Square] {}/{}".format(self.__size, self.__size))
