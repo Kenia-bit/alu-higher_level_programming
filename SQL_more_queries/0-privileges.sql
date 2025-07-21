@@ -1,25 +1,17 @@
--- For user_0d_1
-DO
-BEGIN
-  DECLARE user_exists INT DEFAULT 0;
-  SELECT COUNT(*) INTO user_exists FROM mysql.user WHERE user = 'user_0d_1' AND host = 'localhost';
+#!/bin/bash
+# Usage: ./check_privileges.sh
 
-  IF user_exists = 1 THEN
-    SHOW GRANTS FOR 'user_0d_1'@'localhost';
-  ELSE
-    SELECT 'There is no such grant defined for user ''user_0d_1'' on host ''localhost''' AS ErrorMessage;
-  END IF;
-END;
+MYSQL_USER="root"
+MYSQL_PASS="your_root_password"
+MYSQL_CMD="mysql -u$MYSQL_USER -p$MYSQL_PASS -sNe"
 
--- For user_0d_2
-DO
-BEGIN
-  DECLARE user_exists INT DEFAULT 0;
-  SELECT COUNT(*) INTO user_exists FROM mysql.user WHERE user = 'user_0d_2' AND host = 'localhost';
+for user in user_0d_1 user_0d_2; do
+  exists=$($MYSQL_CMD "SELECT COUNT(*) FROM mysql.user WHERE user='$user' AND host='localhost';")
 
-  IF user_exists = 1 THEN
-    SHOW GRANTS FOR 'user_0d_2'@'localhost';
-  ELSE
-    SELECT 'There is no such grant defined for user ''user_0d_2'' on host ''localhost''' AS ErrorMessage;
-  END IF;
-END;
+  if [ "$exists" -eq 1 ]; then
+    echo "Grants for $user@localhost"
+    $MYSQL_CMD "SHOW GRANTS FOR '$user'@'localhost';"
+  else
+    echo "There is no such grant defined for user '$user' on host 'localhost'"
+  fi
+done
