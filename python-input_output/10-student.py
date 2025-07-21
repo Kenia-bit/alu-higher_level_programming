@@ -1,31 +1,24 @@
 #!/usr/bin/python3
-"""a script that creates a class"""
+"""A script that creates a Student class with serialization support"""
 
 
 class Student:
-    """a class called student that has the following atttributes
-        Attributes:
-            first_name
-            last_name
-            age
-            _json: retrieves a dictionary of the instance attributes
     """
+    Represents a student.
+
+    Attributes:
+        first_name (str)
+        last_name (str)
+        age (int)
+    """
+
     def __init__(self, first_name, last_name, age):
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
 
-    def to_json(self, lis=[2]):
-        if isinstance(lis, list):
-            if lis[0] == 2:
-                return self.__dict__
-            if len(lis) == 0:
-                self.__dict__.clear()
-                return self.__dict__
-            dic = self.__dict__
-            new = {}
-            for i in lis:
-                if i in dic:
-                    value = dic[i]
-                    new[i] = value
-        return new
+    def to_json(self, attrs=None):
+        """Returns a dictionary representation of a Student"""
+        if type(attrs) is list and all(type(attr) is str for attr in attrs):
+            return {key: getattr(self, key) for key in attrs if hasattr(self, key)}
+        return self.__dict__
