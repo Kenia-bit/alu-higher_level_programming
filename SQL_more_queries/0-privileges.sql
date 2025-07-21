@@ -1,14 +1,25 @@
--- Create user_0d_1 with root privileges
-CREATE USER IF NOT EXISTS 'user_0d_1'@'localhost' IDENTIFIED BY 'password1';
-GRANT ALL PRIVILEGES ON *.* TO 'user_0d_1'@'localhost' WITH GRANT OPTION;
+-- For user_0d_1
+DO
+BEGIN
+  DECLARE user_exists INT DEFAULT 0;
+  SELECT COUNT(*) INTO user_exists FROM mysql.user WHERE user = 'user_0d_1' AND host = 'localhost';
 
--- Create user_0d_2 with root privileges (as per your requirement)
-CREATE USER IF NOT EXISTS 'user_0d_2'@'localhost' IDENTIFIED BY 'password2';
-GRANT ALL PRIVILEGES ON *.* TO 'user_0d_2'@'localhost' WITH GRANT OPTION;
+  IF user_exists = 1 THEN
+    SHOW GRANTS FOR 'user_0d_1'@'localhost';
+  ELSE
+    SELECT 'There is no such grant defined for user ''user_0d_1'' on host ''localhost''' AS ErrorMessage;
+  END IF;
+END;
 
--- Flush privileges
-FLUSH PRIVILEGES;
+-- For user_0d_2
+DO
+BEGIN
+  DECLARE user_exists INT DEFAULT 0;
+  SELECT COUNT(*) INTO user_exists FROM mysql.user WHERE user = 'user_0d_2' AND host = 'localhost';
 
--- Now show grants (this must come after creating users and granting privileges)
-SHOW GRANTS FOR 'user_0d_1'@'localhost';
-SHOW GRANTS FOR 'user_0d_2'@'localhost';
+  IF user_exists = 1 THEN
+    SHOW GRANTS FOR 'user_0d_2'@'localhost';
+  ELSE
+    SELECT 'There is no such grant defined for user ''user_0d_2'' on host ''localhost''' AS ErrorMessage;
+  END IF;
+END;
