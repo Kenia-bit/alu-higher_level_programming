@@ -6,43 +6,46 @@ DROP USER IF EXISTS 'user_0d_2'@'localhost';
 
 -- ======================================
 -- CASE 1: Users don't exist
--- Trying to SHOW GRANTS now will give error
+-- Expect: ERROR 1141 (42000)
 -- ======================================
+-- This should return:
+-- "There is no such grant defined for user 'user_0d_1' on host 'localhost'"
 SHOW GRANTS FOR 'user_0d_1'@'localhost';
--- Expect: ERROR 1141: There is no such grant defined for user 'user_0d_1' on host 'localhost'
 
 -- ======================================
 -- CASE 2: Create user_0d_1 as root user with ALL PRIVILEGES
+-- Expect: user_0d_1 has root privileges
 -- ======================================
 CREATE USER 'user_0d_1'@'localhost' IDENTIFIED BY 'password123';
 GRANT ALL PRIVILEGES ON *.* TO 'user_0d_1'@'localhost' WITH GRANT OPTION;
 
--- Show grants for user_0d_1
+-- Confirm user_0d_1 privileges
 SHOW GRANTS FOR 'user_0d_1'@'localhost';
 
 -- ======================================
 -- CASE 3: Create user_0d_2 as root user as well
+-- Expect: user_0d_1 and user_0d_2 both have root privileges
 -- ======================================
 CREATE USER 'user_0d_2'@'localhost' IDENTIFIED BY 'password123';
 GRANT ALL PRIVILEGES ON *.* TO 'user_0d_2'@'localhost' WITH GRANT OPTION;
 
--- Show grants for both users
+-- Confirm both users' privileges
 SHOW GRANTS FOR 'user_0d_1'@'localhost';
 SHOW GRANTS FOR 'user_0d_2'@'localhost';
 
 -- ======================================
--- CASE 4: user_0d_1 root user, user_0d_2 limited privileges
--- Drop user_0d_2 and recreate with limited privileges
+-- CASE 4: Revoke root from user_0d_2 and assign limited privileges
+-- Expect: user_0d_1 root, user_0d_2 has only SELECT and INSERT on user_2_db
 -- ======================================
 DROP USER IF EXISTS 'user_0d_2'@'localhost';
 CREATE USER 'user_0d_2'@'localhost' IDENTIFIED BY 'password123';
 
--- Create database for user_0d_2
+-- Ensure database exists
 CREATE DATABASE IF NOT EXISTS user_2_db;
 
--- Grant SELECT and INSERT only on user_2_db to user_0d_2
+-- Grant only SELECT and INSERT on user_2_db to user_0d_2
 GRANT SELECT, INSERT ON user_2_db.* TO 'user_0d_2'@'localhost';
 
--- Show grants for both users again
+-- Final verification of privileges
 SHOW GRANTS FOR 'user_0d_1'@'localhost';
 SHOW GRANTS FOR 'user_0d_2'@'localhost';
