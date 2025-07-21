@@ -1,51 +1,48 @@
--- ---------------------------------------------
--- 1. DROP USERS IF THEY EXIST (to start fresh)
--- ---------------------------------------------
+-- ======================================
+-- CLEAN START: Drop users if they exist
+-- ======================================
 DROP USER IF EXISTS 'user_0d_1'@'localhost';
 DROP USER IF EXISTS 'user_0d_2'@'localhost';
 
--- ---------------------------------------------
--- 2. CASE: Users don't exist (run only above drops)
---    Then try: SHOW GRANTS FOR 'user_0d_1'@'localhost';
---    This will error out, so do NOT run this directly!
--- ---------------------------------------------
--- (No user creation, so error expected)
+-- ======================================
+-- CASE 1: Users don't exist
+-- Trying to SHOW GRANTS now will give error
+-- ======================================
+SHOW GRANTS FOR 'user_0d_1'@'localhost';
+-- Expect: ERROR 1141: There is no such grant defined for user 'user_0d_1' on host 'localhost'
 
--- ---------------------------------------------
--- 3. CASE: Create user_0d_1 as root user
--- ---------------------------------------------
-CREATE USER 'user_0d_1'@'localhost' IDENTIFIED BY 'password';
+-- ======================================
+-- CASE 2: Create user_0d_1 as root user with ALL PRIVILEGES
+-- ======================================
+CREATE USER 'user_0d_1'@'localhost' IDENTIFIED BY 'password123';
 GRANT ALL PRIVILEGES ON *.* TO 'user_0d_1'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
 
--- To check grants run:
--- SHOW GRANTS FOR 'user_0d_1'@'localhost';
+-- Show grants for user_0d_1
+SHOW GRANTS FOR 'user_0d_1'@'localhost';
 
--- ---------------------------------------------
--- 4. CASE: Create user_0d_1 and user_0d_2 both as root users
--- ---------------------------------------------
-CREATE USER 'user_0d_2'@'localhost' IDENTIFIED BY 'password';
+-- ======================================
+-- CASE 3: Create user_0d_2 as root user as well
+-- ======================================
+CREATE USER 'user_0d_2'@'localhost' IDENTIFIED BY 'password123';
 GRANT ALL PRIVILEGES ON *.* TO 'user_0d_2'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
 
--- To check grants run:
--- SHOW GRANTS FOR 'user_0d_1'@'localhost';
--- SHOW GRANTS FOR 'user_0d_2'@'localhost';
+-- Show grants for both users
+SHOW GRANTS FOR 'user_0d_1'@'localhost';
+SHOW GRANTS FOR 'user_0d_2'@'localhost';
 
--- ---------------------------------------------
--- 5. CASE: user_0d_1 root user; user_0d_2 has SELECT and INSERT on database user_2_db
--- ---------------------------------------------
-
--- Drop previous user_0d_2 to redefine
+-- ======================================
+-- CASE 4: user_0d_1 root user, user_0d_2 limited privileges
+-- Drop user_0d_2 and recreate with limited privileges
+-- ======================================
 DROP USER IF EXISTS 'user_0d_2'@'localhost';
+CREATE USER 'user_0d_2'@'localhost' IDENTIFIED BY 'password123';
 
-CREATE USER 'user_0d_2'@'localhost' IDENTIFIED BY 'password';
+-- Create database for user_0d_2
+CREATE DATABASE IF NOT EXISTS user_2_db;
 
--- Grant only SELECT and INSERT on user_2_db.*
+-- Grant SELECT and INSERT only on user_2_db to user_0d_2
 GRANT SELECT, INSERT ON user_2_db.* TO 'user_0d_2'@'localhost';
 
-FLUSH PRIVILEGES;
-
--- To check grants run:
--- SHOW GRANTS FOR 'user_0d_1'@'localhost';
--- SHOW GRANTS FOR 'user_0d_2'@'localhost';
+-- Show grants for both users again
+SHOW GRANTS FOR 'user_0d_1'@'localhost';
+SHOW GRANTS FOR 'user_0d_2'@'localhost';
