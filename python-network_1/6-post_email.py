@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-"""A script that makes a post request with requests library"""
+"""Sends a POST request with email and displays the body of the response."""
 
-import requests
 import sys
+import requests
 
 if __name__ == "__main__":
-    if len(sys.argv) == 3:
-        url = sys.argv[1]
-        email = sys.argv[2]
-        with requests.post(url, data={"email": email}) as response:
-            print(response.text)
+    url = sys.argv[1]
+    email = sys.argv[2]
+    data = {"email": email}
+    response = requests.post(url, data=data)
+    print(response.text)
