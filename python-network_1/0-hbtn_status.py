@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """Fetches https://intranet.hbtn.io/status and prints the response body"""
 
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 if __name__ == "__main__":
-    with urlopen("https://intranet.hbtn.io/status") as response:
+    req = Request("https://intranet.hbtn.io/status", headers={'User-Agent': 'Mozilla/5.0'})
+    with urlopen(req) as response:
         content = response.read()
         print("Body response:")
         print("\t- type: {}".format(type(content)))
