@@ -1,3 +1,11 @@
-#!/bin/bash
-# A script that obtains the content-length of an http request
-curl -sI "$1" | grep -i "Content-Length" | cut -d " " -f2
+#!/usr/bin/python3
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def index():
+    return "my index page"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
