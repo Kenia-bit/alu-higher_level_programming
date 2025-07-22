@@ -1,14 +1,13 @@
 #!/usr/bin/python3
-"""Fetches https://intranet.hbtn.io/status with urllib"""
+"""Fetches https://alu-intranet.hbtn.io/status using requests"""
 
-from urllib.request import Request, urlopen
+import requests
 
 if __name__ == "__main__":
-    url = "https://intranet.hbtn.io/status"
-    req = Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urlopen(req) as response:
-        body = response.read()
-        print("Body response:")
-        print("\t- type: {}".format(type(body)))
-        print("\t- content: {}".format(body))
-        print("\t- utf8 content: {}".format(body.decode("utf-8")))
+    url = "https://alu-intranet.hbtn.io/status"
+    response = requests.get(url)
+    content = response.text
+
+    print("Body response:")
+    print("\t- type: {}".format(type(content)))
+    print("\t- content: {}".format(content))
