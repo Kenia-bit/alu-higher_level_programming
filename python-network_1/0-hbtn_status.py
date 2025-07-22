@@ -5,10 +5,7 @@ from urllib.request import Request, urlopen
 
 if __name__ == "__main__":
     url = "https://intranet.hbtn.io/status"
-    req = Request(url, headers={
-        "User-Agent": "Mozilla/5.0"
-    })
-
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     with urlopen(req) as response:
         body = response.read()
         print("Body response:")
