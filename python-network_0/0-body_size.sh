@@ -1,3 +1,3 @@
 #!/bin/bash
-# Fetches the body of a web page and prints it with GET / => prefix
-echo "GET / => \"$(curl -s "$1")\""
+# Sends a request to a URL and displays the size of the response body in bytes
+curl -s "$1" | wc -c
