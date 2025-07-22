@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-"""A script that opens a TCP connection to a URL and prints its content"""
+"""Fetches a URL and displays the body of the response with specific format"""
 
 from urllib.request import urlopen
+__import__('sys')
 
 if __name__ == "__main__":
     sys = __import__('sys')
-    url = sys.argv[1] if len(sys.argv) > 1 else "https://alx-intranet.hbtn.io/status"
+    url = sys.argv[1]
     with urlopen(url) as response:
         content = response.read()
         print("Body response:")
