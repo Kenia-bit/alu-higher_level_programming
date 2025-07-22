@@ -1,12 +1,14 @@
 #!/usr/bin/python3
-"""Fetches http://0.0.0.0:5050/status using requests"""
+"""Fetches https://intranet.hbtn.io/status with urllib"""
 
-import requests
+from urllib.request import Request, urlopen
 
 if __name__ == "__main__":
-    url = "http://0.0.0.0:5050/status"
-    response = requests.get(url)
-    content = response.text
-    print("Body response:")
-    print("\t- type: {}".format(type(content)))
-    print("\t- content: {}".format(content))
+    url = "https://intranet.hbtn.io/status"
+    req = Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urlopen(req) as response:
+        body = response.read()
+        print("Body response:")
+        print("\t- type: {}".format(type(body)))
+        print("\t- content: {}".format(body))
+        print("\t- utf8 content: {}".format(body.decode("utf-8")))
