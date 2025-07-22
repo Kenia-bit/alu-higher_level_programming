@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-"""A script that makes a request and checks the status code."""
+"""Sends a request to a URL and displays the body of the response."""
 
-import requests
 import sys
+import requests
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        url = sys.argv[1]
-        with requests.get(url) as response:
-            if response.status_code < 400:
-                print(response.text)
-            else:
-                print(f"Error code: {response.status_code}")
+    url = sys.argv[1]
+    response = requests.get(url)
+
+    if response.status_code >= 400:
+        print("Error code: {}".format(response.status_code))
+    else:
+        print(response.text)
