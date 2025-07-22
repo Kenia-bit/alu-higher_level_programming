@@ -1,22 +1,21 @@
 #!/usr/bin/python3
-"""A script that makes a POST request and handles JSON object"""
+"""Sends a POST request to http://0.0.0.0:5000/search_user with a letter"""
 
 import requests
 import sys
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        q = sys.argv[1]
-    else:
-        q = ""
-    data = {"q": q}
+    q = sys.argv[1] if len(sys.argv) > 1 else ""
     url = "http://0.0.0.0:5000/search_user"
+    data = {"q": q}
+
     try:
-        with requests.post(url, data=data) as response:
-            json_object = response.json()
-            if len(json_object) == 0:
-                print("No result")
-            else:
-                print(f"[{json_object['id']}] {json_object['name']}")
-    except Exception as error:
+        response = requests.post(url, data=data)
+        json_data = response.json()
+
+        if json_data:
+            print("[{}] {}".format(json_data.get("id"), json_data.get("name")))
+        else:
+            print("No result")
+    except ValueError:
         print("Not a valid JSON")
