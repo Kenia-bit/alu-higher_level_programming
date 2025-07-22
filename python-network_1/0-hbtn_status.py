@@ -2,9 +2,9 @@
 """A script that opens a TCP connection to a URL and prints its content"""
 
 from urllib.request import urlopen
-import sys
 
 if __name__ == "__main__":
+    sys = __import__('sys')
     url = sys.argv[1] if len(sys.argv) > 1 else "https://alx-intranet.hbtn.io/status"
     with urlopen(url) as response:
         content = response.read()
