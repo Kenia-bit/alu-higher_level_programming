@@ -1,22 +1,35 @@
 #!/usr/bin/python3
-"""function that adds 2 integers.
-    Prototype: def add_integer(a, b=98):
-    a and b must be integers or floats, otherwise raise a TypeError exception
-    a and b must be first casted to integers if they are float
-    Returns an integer: the addition of a and b
 """
-
+This module defines a function that adds two integers.
+The function validates input types and casts floats to integers.
+"""
 
 def add_integer(a, b=98):
     """
-        add_integer function adds two numbers
-        args a: an int or a float
-            b: an int or a float
+    Adds two integers or floats (which are casted to integers).
+    
+    Args:
+        a (int or float): First number.
+        b (int or float): Second number. Defaults to 98.
+    
+    Returns:
+        int: The sum of the two integers.
+    
+    Raises:
+        TypeError: If a or b is not an integer or float.
     """
-    if not isinstance(a, (int, float)):
+    if isinstance(a, float):
+        if a != a:  # NaN check
+            raise TypeError("a must be an integer")
+        a = int(a)
+    elif not isinstance(a, int):
         raise TypeError("a must be an integer")
-    if not isinstance(b, (int, float)):
+
+    if isinstance(b, float):
+        if b != b:  # NaN check
+            raise TypeError("b must be an integer")
+        b = int(b)
+    elif not isinstance(b, int):
         raise TypeError("b must be an integer")
-    a = int(a)
-    b = int(b)
+
     return a + b
