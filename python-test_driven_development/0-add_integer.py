@@ -18,10 +18,17 @@ def add_integer(a, b=98):
 
     Raises:
         TypeError: If either a or b is not an int or float.
+        ValueError: If float is NaN or Infinity.
     """
     if not isinstance(a, (int, float)):
         raise TypeError("a must be an integer")
     if not isinstance(b, (int, float)):
         raise TypeError("b must be an integer")
+
+    # Check for NaN or Infinity
+    if isinstance(a, float) and (a != a or a == float('inf') or a == float('-inf')):
+        raise ValueError("a must be a valid float or int")
+    if isinstance(b, float) and (b != b or b == float('inf') or b == float('-inf')):
+        raise ValueError("b must be a valid float or int")
 
     return int(a) + int(b)
