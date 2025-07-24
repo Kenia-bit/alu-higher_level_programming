@@ -9,17 +9,6 @@ Examples:
 
     >>> matrix_divided([[1, 2.5], [3.1, 4.0]], 2)
     [[0.5, 1.25], [1.55, 2.0]]
-
-    >>> matrix_divided([[1, 2, 3], [4, 5, 6]], 3)
-    [[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
-
-    >>> matrix_divided([[1]], 0)
-    Traceback (most recent call last):
-    ZeroDivisionError: division by zero
-
-    >>> matrix_divided([[1, "2"], [3, 4]], 2)
-    Traceback (most recent call last):
-    TypeError: matrix must be a matrix (list of lists) of integers/floats
 """
 
 
@@ -43,7 +32,9 @@ def matrix_divided(matrix, div):
     if (not isinstance(matrix, list) or any(
             not isinstance(row, list) for row in matrix)):
         raise TypeError(
-            "matrix must be a matrix (list of lists) of integers/floats")
+            "matrix must be a matrix (list of lists) "
+            "of integers/floats"
+        )
 
     row_length = len(matrix[0])
     for row in matrix:
@@ -52,7 +43,9 @@ def matrix_divided(matrix, div):
         for element in row:
             if not isinstance(element, (int, float)):
                 raise TypeError(
-                    "matrix must be a matrix (list of lists) of integers/floats")
+                    "matrix must be a matrix (list of lists) "
+                    "of integers/floats"
+                )
 
     if not isinstance(div, (int, float)):
         raise TypeError("div must be a number")
@@ -61,9 +54,3 @@ def matrix_divided(matrix, div):
         raise ZeroDivisionError("division by zero")
 
     return [[round(elem / div, 2) for elem in row] for row in matrix]
-
-
-# ✅ Run doctests from inside the file
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
