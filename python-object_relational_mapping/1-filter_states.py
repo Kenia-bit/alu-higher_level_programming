@@ -1,24 +1,27 @@
 #!/usr/bin/python3
-""" A script that lists all states from the database hbtn_0e_0_usa:
-"""
+"""A script that lists all states starting with 'N' from the database hbtn_0e_0_usa"""
+
 import sys
-from MySQLdb import connect
+import MySQLdb
 
 if __name__ == "__main__":
-    arg = sys.argv
-    username = arg[1]
-    passwd = arg[2]
-    db = arg[3]          # database name
-    if len(arg) == 4:
-        with connect(
-                host="localhost", user=username,
-                password=passwd, database=db,
-                port=3306
-                ) as mysql_db:
-            cursor = mysql_db.cursor()
-            cursor.execute(
-                    "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC"
-                    )
-            result = cursor.fetchall()
-            for i in result:
-                print(i)
+    username = sys.argv[1]
+    passwd = sys.argv[2]
+    db = sys.argv[3]
+
+    # Connect to MySQL
+    db_connect = MySQLdb.connect(
+        host="localhost", port=3306, user=username, passwd=passwd, db=db
+    )
+    cursor = db_connect.cursor()
+
+    # Case-sensitive match using BINARY
+    cursor.execute("SELECT * FROM states WHERE BINARY name LIKE 'N%' ORDER BY id ASC")
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+
+    # Clean up
+    cursor.close()
+    db_connect.close()
