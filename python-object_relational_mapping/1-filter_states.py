@@ -11,17 +11,22 @@ if __name__ == "__main__":
 
     # Connect to MySQL
     db_connect = MySQLdb.connect(
-        host="localhost", port=3306, user=username, passwd=passwd, db=db
+        host="localhost",
+        port=3306,
+        user=username,
+        passwd=passwd,
+        db=db
     )
     cursor = db_connect.cursor()
 
     # Case-sensitive match using BINARY
-    cursor.execute("SELECT * FROM states WHERE BINARY name LIKE 'N%' ORDER BY id ASC")
+    cursor.execute(
+        "SELECT * FROM states WHERE BINARY name LIKE 'N%' ORDER BY id ASC"
+    )
     rows = cursor.fetchall()
 
     for row in rows:
         print(row)
 
-    # Clean up
     cursor.close()
     db_connect.close()
