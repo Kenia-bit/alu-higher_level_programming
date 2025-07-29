@@ -19,4 +19,4 @@ def fetch_status(url):
 
 if __name__ == "__main__":
     if fetch_status("http://0.0.0.0:5050/status") != 0:
-        fetch_status("https://intranet.hbtn.io/status")
+        fetch_status("https://alu-intranet.hbtn.io/status")
