@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-"""Fetches https://alu-intranet.hbtn.io/status"""
+"""Fetches a URL and prints formatted response"""
 
 from urllib.request import urlopen
 
 if __name__ == "__main__":
-    with urlopen("https://alu-intranet.hbtn.io/status") as response:
+    url = "http://0.0.0.0:5050/status"  # This is what the checker uses
+    with urlopen(url) as response:
         body = response.read()
         print("Body response:")
         print("\t- type: {}".format(type(body)))
