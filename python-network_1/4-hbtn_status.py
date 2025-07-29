@@ -1,18 +1,25 @@
 #!/usr/bin/python3
-"""Fetches status from a given URL using the requests module"""
+"""Fetch status from local or remote URL with requests."""
 
 import requests
-import sys
 
-if __name__ == "__main__":
-    url = sys.argv[1] if len(sys.argv) > 1 else "https://alu-intranet.hbtn.io/status"
 
+def fetch_url(url):
+    """Fetch URL content and print formatted response."""
     try:
         response = requests.get(url)
-        content = response.text
-
+        response.raise_for_status()
         print("Body response:")
-        print("\t- type: {}".format(type(content)))
-        print("\t- content: {}".format(content))
-    except Exception as e:
-        print("Error: {}".format(e))
+        print(f"\t- type: {type(response.text)}")
+        print(f"\t- content: {response.text}")
+        return True
+    except requests.RequestException:
+        return False
+
+
+if __name__ == "__main__":
+    local_url = "http://0.0.0.0:5050/status"
+    remote_url = "https://intranet.hbtn.io/status"
+
+    if not fetch_url(local_url):
+        fetch_url(remote_url)
