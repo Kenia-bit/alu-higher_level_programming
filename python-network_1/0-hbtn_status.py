@@ -2,9 +2,11 @@
 """Fetches a URL and prints formatted response"""
 
 from urllib.request import urlopen
+import sys
 
 if __name__ == "__main__":
-    with urlopen("http://0.0.0.0:5050/status") as response:
+    url = sys.argv[1] if len(sys.argv) > 1 else "https://alu-intranet.hbtn.io/status"
+    with urlopen(url) as response:
         body = response.read()
         print("Body response:")
         print("\t- type: {}".format(type(body)))
