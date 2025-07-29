@@ -1,14 +1,11 @@
 #!/usr/bin/python3
-"""Fetches https://intranet.hbtn.io/status using urllib"""
+"""A script that opens a TCP connection to a url and prints its content"""
 
-from urllib.request import Request, urlopen
-
+from urllib.request import urlopen
 if __name__ == "__main__":
-    url = "https://intranet.hbtn.io/status"
-    req = Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urlopen(req) as response:
-        body = response.read()
+    with urlopen("https://alx-intranet.hbtn.io/status") as response:
+        response = response.read()
         print("Body response:")
-        print("\t- type: {}".format(type(body)))
-        print("\t- content: {}".format(body))
-        print("\t- utf8 content: {}".format(body.decode("utf-8")))
+        print("\t- type: {}".format(type(response)))
+        print("\t- content: {}".format(response))
+        print("\t- utf8 content: {}".format(response.decode("utf-8")))
