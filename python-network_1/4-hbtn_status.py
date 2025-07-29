@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""Fetches status from a given URL and displays the response details"""
+"""Fetches custom status from a local test server using requests"""
 
 import requests
 
 if __name__ == "__main__":
-    url = "https://alu-intranet.hbtn.io/status"
+    url = "http://0.0.0.0:5050/status"  # <-- Test server URL
     response = requests.get(url)
     content = response.text
 
