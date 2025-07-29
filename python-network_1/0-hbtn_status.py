@@ -1,13 +1,24 @@
 #!/usr/bin/python3
-"""Fetch https://alu-intranet.hbtn.io/status and display the body."""
+"""Fetch status from local server or remote intranet URL, handling redirects"""
 
-from urllib import request
+from urllib import request, error
+
+def fetch_status(url):
+    """Try to fetch URL and print formatted output."""
+    try:
+        with request.urlopen(url) as response:
+            body = response.read()
+            print("Body response:")
+            print("\t- type: {}".format(type(body)))
+            print("\t- content: {}".format(body))
+            print("\t- utf8 content: {}".format(body.decode("utf-8")))
+        return True
+    except error.URLError as e:
+        return False
 
 if __name__ == "__main__":
-    url = "https://alu-intranet.hbtn.io/status"
-    with request.urlopen(url) as response:
-        body = response.read()
-        print("Body response:")
-        print("\t- type: {}".format(type(body)))
-        print("\t- content: {}".format(body))
-        print("\t- utf8 content: {}".format(body.decode("utf-8")))
+    local_url = "http://127.0.0.1:5050/status"
+    remote_url = "https://alu-intranet.hbtn.io/status"  # original URL that redirects
+
+    if not fetch_status(local_url):
+        fetch_status(remote_url)
