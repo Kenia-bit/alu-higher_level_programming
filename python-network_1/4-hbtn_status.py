@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-"""Fetches https://intranet.hbtn.io/status using requests"""
+"""Fetches https://alu-intranet.hbtn.io/status using requests"""
 
 import requests
 
+
 if __name__ == "__main__":
-    url = "https://intranet.hbtn.io/status"
-    headers = {'User-Agent': 'Mozilla/5.0 (compatible)'}
+    url = "https://alu-intranet.hbtn.io/status"
     try:
-        response = requests.get(url, headers=headers, verify=False)
+        response = requests.get(url)
         content = response.text
         print("Body response:")
         print("\t- type: {}".format(type(content)))
