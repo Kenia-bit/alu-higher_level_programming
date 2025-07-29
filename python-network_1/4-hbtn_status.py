@@ -1,16 +1,13 @@
 #!/usr/bin/python3
-"""Fetches http://0.0.0.0:5050/status using requests"""
-
 import requests
 
-
 if __name__ == "__main__":
-    url = "http://0.0.0.0:5050/status"  # Use this instead of intranet URL
+    url = "http://0.0.0.0:5050/status"  # or https://intranet.hbtn.io/status
     try:
-        response = requests.get(url, timeout=5)
+        response = requests.get(url)
         content = response.text
         print("Body response:")
-        print("\t- type: {}".format(type(content)))
-        print("\t- content: {}".format(content))
-    except requests.RequestException as e:
+        print(f"\t- type: {type(content)}")
+        print(f"\t- content: {content}")
+    except Exception as e:
         print("Error:", e)
