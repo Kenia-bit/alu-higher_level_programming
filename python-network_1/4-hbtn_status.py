@@ -2,9 +2,10 @@
 """Fetches status from a given URL using the requests module"""
 
 import requests
+import sys
 
 if __name__ == "__main__":
-    url = "http://0.0.0.0:5050/status"  # Change to https://alu-intranet.hbtn.io/status when testing remotely
+    url = sys.argv[1] if len(sys.argv) > 1 else "https://alu-intranet.hbtn.io/status"
 
     try:
         response = requests.get(url)
