@@ -1,29 +1,22 @@
 #!/usr/bin/python3
-"""
-Fetch status from URL, prefer local if available.
-Uses requests only.
-"""
+"""Fetch status from local or remote URL using requests only."""
 
 import requests
-import sys
 
 
 def fetch_status(url):
-    """Fetches URL and prints body response info."""
+    """Fetch status from the given URL and print formatted response."""
     try:
-        r = requests.get(url)
+        response = requests.get(url)
+        text = response.text
         print("Body response:")
-        print(f"\t- type: {type(r.text)}")
-        print(f"\t- content: {r.text}")
-        return True
+        print("\t- type: {}".format(type(text)))
+        print("\t- content: {}".format(text))
+        return 0
     except requests.RequestException:
-        return False
+        return 1
 
 
 if __name__ == "__main__":
-    # Try local first
-    local_url = "http://0.0.0.0:5050/status"
-    remote_url = "https://intranet.hbtn.io/status"
-
-    if not fetch_status(local_url):
-        fetch_status(remote_url)
+    if fetch_status("http://0.0.0.0:5050/status") != 0:
+        fetch_status("https://intranet.hbtn.io/status")
