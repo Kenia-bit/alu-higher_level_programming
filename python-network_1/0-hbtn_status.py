@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-"""A script that opens a TCP connection to a url and prints its content"""
+"""Fetches https://alu-intranet.hbtn.io/status"""
 
 from urllib.request import urlopen
+
 if __name__ == "__main__":
-    with urlopen("http://0.0.0.0:5050/status") as response:
-        response = response.read()
+    with urlopen("https://alu-intranet.hbtn.io/status") as response:
+        body = response.read()
         print("Body response:")
-        print("\t- type: {}".format(type(response)))
-        print("\t- content: {}".format(response))
-        print("\t- utf8 content: {}".format(response.decode("utf-8")))
+        print("\t- type: {}".format(type(body)))
+        print("\t- content: {}".format(body))
+        print("\t- utf8 content: {}".format(body.decode("utf-8")))
