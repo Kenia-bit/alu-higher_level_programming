@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-"""Fetch status from local or remote URL with requests."""
+"""Fetch status from local or remote URL using requests."""
 
 import requests
 
 
 def fetch_url(url):
-    """Fetch URL content and print formatted response."""
+    """Fetch a URL and print its response content formatted."""
     try:
         response = requests.get(url)
         response.raise_for_status()
