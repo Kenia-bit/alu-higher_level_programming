@@ -1,0 +1,10 @@
+"""
+>>> text_indentation("Hello world. How are you? I'm fine: thanks.")
+Hello world.
+
+ How are you?
+
+ I'm fine:
+
+ thanks.
+"""
