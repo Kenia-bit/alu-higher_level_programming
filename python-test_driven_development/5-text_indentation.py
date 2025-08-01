@@ -9,12 +9,10 @@ def text_indentation(text):
         print(text[i], end="")
         if text[i] in ['.', '?', ':']:
             print()  # first newline
-            print()  # second newline (total two new lines)
+            if i != length - 1:
+                print()  # second newline only if not last char
             i += 1
             while i < length and text[i] == ' ':
                 i += 1
-            # Avoid extra blank line after last punctuation
-            if i >= length:
-                break
             continue
         i += 1
