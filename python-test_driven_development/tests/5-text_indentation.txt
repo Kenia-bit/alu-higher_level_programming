@@ -1,4 +1,4 @@
-"""
+>>> from 5-text_indentation import text_indentation
 >>> text_indentation("Hello world. How are you? I'm fine: thanks.")
 Hello world.
 
@@ -7,4 +7,3 @@ Hello world.
  I'm fine:
 
  thanks.
-"""
