@@ -1,6 +1,5 @@
 """
-Test for print_square(size)
-
+>>> from your_module_name import print_square
 >>> print_square(4)
 ####
 ####
