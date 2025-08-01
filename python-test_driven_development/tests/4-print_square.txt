@@ -1,5 +1,5 @@
-"""
->>> from your_module_name import print_square
+>>> from importlib.machinery import SourceFileLoader
+>>> print_square = SourceFileLoader("print_square", "./4-print_square.py").load_module().print_square
 >>> print_square(4)
 ####
 ####
@@ -25,4 +25,3 @@ TypeError: size must be an integer
 Traceback (most recent call last):
 ...
 TypeError: size must be an integer
-"""
