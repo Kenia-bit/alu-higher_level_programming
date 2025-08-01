@@ -22,3 +22,30 @@ def print_square(size):
 
     for _ in range(size):
         print("#" * size)
+"""
+>>> print_square(4)
+####
+####
+####
+####
+
+>>> print_square(1)
+#
+
+>>> print_square(0)
+
+>>> print_square(-1)
+Traceback (most recent call last):
+...
+ValueError: size must be >= 0
+
+>>> print_square(3.5)
+Traceback (most recent call last):
+...
+TypeError: size must be an integer
+
+>>> print_square("3")
+Traceback (most recent call last):
+...
+TypeError: size must be an integer
+"""
